@@ -1,15 +1,14 @@
 Package: rmdmanip
-Title: What the Package Does (One Line, Title Case)
+Title: Provides manipulation options for R Markdown yaml headers
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Alex",
+           family = "de Beer",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "alexdebeer@gmail.com",
+           comment = c(ORCID = "0000-0002-5168-9982"))
+Description: Allow direct manipulation of values set in the yaml header of .rmd text files.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
