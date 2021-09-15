@@ -39,7 +39,7 @@ rmdmanip = R6::R6Class(
       # Merge back with original text body
       newfile = paste0(c(private$lead, headernew, private$body), collapse='---\n')
 
-    }
+    },
 
     write = function(fn){
       lines = stringr::str_split(rmd, '\n')
