@@ -17,7 +17,8 @@ Imports:
     R6,
     stringr,
     yaml,
-    rmarkdown
+    rmarkdown,
+    readtext
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

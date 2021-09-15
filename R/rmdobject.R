@@ -39,15 +39,6 @@ rmdmanip = R6::R6Class(
       # Merge back with original text body
       newfile = paste0(c(private$lead, headernew, private$body), collapse='---\n')
 
-    },
-
-    write = function(fn){
-      lines = stringr::str_split(rmd, '\n')
-      fileConn<-file(fn)
-      for (x in lines){
-        writeLines(x, con = fileConn, sep='\n')
-      }
-      close(fileConn)
     }
 
   ),
@@ -59,3 +50,71 @@ rmdmanip = R6::R6Class(
   )
 
 )
+
+#' Reads R markdown file
+#' @param file  File path
+#' @return rmdmanip object
+#' @export
+read.rmd = function(file){
+  rmdmanip$new(readtext::readtext(file)$text)
+}
+
+#' Imports R markdown file from loaded string
+#' @param string String representation of R markdown file
+#' @return rmdmanip object
+#' @export
+read.rmds = function(string){
+  rmdmanip$new(string)
+}
+
+#' Set root-level variable
+#' @param rmdob rmdmanip object
+#'
+#' @param entry_name preamble yaml entry key
+#' @param entry_value preamble yaml entry value
+#'
+#' @return rmdmanip object
+#' @export
+put = function(rmdob, entry_name, entry_value){
+  rmdob$put(entry_name, entry_value)
+  return(rmdob)
+}
+
+#' Set value in params block of R markdown preamble
+#' @param rmdob rmdmanip object
+#'
+#' @param param_name key of the parameter
+#' @param param_value value of the parameter
+#'
+#' @export
+put_param = function(rmdob, param_name, param_value){
+  rmdob$putParam(param_name, param_value)
+  return(rmdob)
+}
+
+#' Write updated R markdown file to disk
+#' @param rmdob rmdmanip object
+#'
+#' @param file Output file name
+#'
+#' @export
+dump = function(rmdob, file){
+  rmd = rmdob$build()
+  lines = stringr::str_split(rmd, '\n')
+
+  fileConn<-file(file)
+  for (x in lines){
+    writeLines(x, con = fileConn, sep='\n')
+  }
+  close(fileConn)
+}
+
+#' Convert updated R markdown to string
+#' @param rmdob rmdmanip object
+#'
+#' @export
+dumps = function(rmdob){
+  rmdtext = rmdob$build()
+  return(rmdtext)
+}
+

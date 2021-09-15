@@ -1,28 +1,40 @@
 test_that("Parsing works", {
   basetext = '---\ntitle: "Test RMD"\noutput: html_document\n---\n# Rmarkdown body\n'
-  rmd = rmdmanip$new(basetext)$getHead()
+  rmd = read.rmds(basetext)$getHead()
 
   expect_equal(rmd, list(title = "Test RMD", output = "html_document"))
 })
 
 test_that("Building works", {
   basetext = '---\ntitle: "Test RMD"\noutput: html_document\n---\n# Rmarkdown body\n'
-  rmd = rmdmanip$new(basetext)$build()
+  rmd = read.rmds(basetext) %>% dumps()
 
   expect_equal(rmd, "---\ntitle: Test RMD\noutput: html_document\n---\n# Rmarkdown body\n")
 })
 
+test_that("Saving works", {
+  fol = tempdir(check=T)
+  fn = paste0(fol, '/test_temp_1.txt')
+
+  basetext = '---\ntitle: Test RMD\noutput: html_document\n---\n# Rmarkdown body\n'
+  read.rmds(basetext) %>% dump(fn)
+  rmd = read.rmd(fn) %>% dumps()
+
+  expect_equal(rmd, basetext)
+})
+
+
 test_that("Setting yaml items works", {
   basetext = '---\ntitle: "Test RMD"\noutput: html_document\n---\n# Rmarkdown body\n'
-  rmd = rmdmanip$new(basetext)$put('title', 'Amended RMD')$build()
-  rmd = rmdmanip$new(basetext
-    )$putParam('brilligness', 'slither tove'
-    )$putParam('gyre', 1
-    )$putParam('wabe', c(1,2)
-    )$putParam('momerats', c('out', 'grabe')
-    )$putParam('beware', list('jabberwock'= list('jaws' = 'bite', 'claws' = 'catch') )
-    )$putParam('heed', list('bandersnatch'= 'frumious' )
-    )$build()
+  rmd = read.rmds(basetext) %>%
+    put_param('brilligness', 'slither tove') %>%
+    put_param('gyre', 1) %>%
+    put_param('wabe', c(1,2)) %>%
+    put_param('momerats', c('out', 'grabe')) %>%
+    put_param('beware', list('jabberwock'= list('jaws' = 'bite', 'claws' = 'catch') )) %>%
+    put_param('heed', list('bandersnatch'= 'frumious' )) %>%
+    put('title', 'Amended RMD') %>%
+    dumps()
 
   expect_snapshot(rmd)
 })
@@ -32,22 +44,15 @@ test_that("File builds", {
   fn = paste0(fol, '/temp.Rmd')
   fn2 = paste0(fol, '/temp.html')
   basetext = '---\ntitle: "Test RMD"\noutput: html_document\n---\n# Rmarkdown body\n'
-  rmd = rmdmanip$new(basetext
-    )$put('title', 'Amended RMD'
-    )$putParam('brilligness', 'slither tove'
-    )$putParam('gyre', 1
-    )$putParam('wabe', c(1,2)
-    )$putParam('momerats', c('out', 'grabe')
-    )$putParam('beware', list('jabberwock'= list('jaws' = 'bite', 'claws' = 'catch') )
-    )$putParam('heed', list('bandersnatch'= 'frumious' )
-    )$build()
-
-  lines = stringr::str_split(rmd, '\n')
-  fileConn<-file(fn)
-  for (x in lines){
-    writeLines(x, con = fileConn, sep='\n')
-  }
-  close(fileConn)
+  rmd = read.rmds(basetext) %>%
+    put_param('brilligness', 'slither tove') %>%
+    put_param('gyre', 1) %>%
+    put_param('wabe', c(1,2)) %>%
+    put_param('momerats', c('out', 'grabe')) %>%
+    put_param('beware', list('jabberwock'= list('jaws' = 'bite', 'claws' = 'catch') )) %>%
+    put_param('heed', list('bandersnatch'= 'frumious' )) %>%
+    put('title', 'Amended RMD') %>%
+    dump(fn)
 
   rmarkdown::render(fn, output_file = fn2)
 
