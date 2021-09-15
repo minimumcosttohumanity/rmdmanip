@@ -8,7 +8,7 @@ rmdmanip = R6::R6Class(
       blocks = stringr::str_split(rmdString, '---\n')[[1]]
       private$lead = blocks[1]
       private$head = yaml::yaml.load(blocks[2])
-      private$body = blocks[3]
+      private$body = blocks[3:length(blocks)]
     },
 
     getHead = function(){

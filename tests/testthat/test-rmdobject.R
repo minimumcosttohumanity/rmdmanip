@@ -12,6 +12,12 @@ test_that("Building works", {
   expect_equal(rmd, "---\ntitle: Test RMD\noutput: html_document\n---\n# Rmarkdown body\n")
 })
 
+test_that("Roundtrip works also with multiple --- lines", {
+  basetext = '---\ntitle: Test RMD\noutput: html_document\n---\n# Rmarkdown body\n---\n# More body\n'
+  rmd = read.rmds(basetext) %>% dumps()
+  expect_equal(rmd, basetext)
+})
+
 test_that("Saving works", {
   fol = tempdir(check=T)
   fn = paste0(fol, '/test_temp_1.txt')
