@@ -1,3 +1,10 @@
+# RMDmanip works for plain md files
+
+    Code
+      rmd
+    Output
+      [1] "---\nparams:\n  placeholder: 1.0\n---\n# Rmarkdown body\n# More body\n"
+
 # Setting yaml items works
 
     Code

@@ -18,6 +18,14 @@ test_that("Roundtrip works also with multiple --- lines", {
   expect_equal(rmd, basetext)
 })
 
+test_that("RMDmanip works for plain md files", {
+  basetext = '# Rmarkdown body\n# More body\n'
+  rmd = read.rmds(basetext) %>% dumps()
+  expect_snapshot(rmd)
+})
+
+
+
 test_that("Saving works", {
   fol = tempdir(check=T)
   fn = paste0(fol, '/test_temp_1.txt')
@@ -48,8 +56,8 @@ test_that("Setting yaml items works", {
 test_that("File builds", {
   fol = tempdir(check=T)
   fn = paste0(fol, '/temp.Rmd')
-  fn2 = paste0(fol, '/temp.html')
-  basetext = '---\ntitle: "Test RMD"\noutput: html_document\n---\n# Rmarkdown body\n'
+  fn2 = paste0(fol, '/temp.tex')
+  basetext = '---\ntitle: "Test RMD"\noutput: latex_fragment\n---\n# Rmarkdown body\n'
   rmd = read.rmds(basetext) %>%
     put_param('brilligness', 'slither tove') %>%
     put_param('gyre', 1) %>%

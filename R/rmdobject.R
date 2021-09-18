@@ -6,9 +6,15 @@ rmdmanip = R6::R6Class(
 
     initialize = function(rmdString){
       blocks = stringr::str_split(rmdString, '---\n')[[1]]
-      private$lead = blocks[1]
-      private$head = yaml::yaml.load(blocks[2])
-      private$body = blocks[3:length(blocks)]
+      if(length(blocks) > 1){
+        private$lead = blocks[1]
+        private$head = yaml::yaml.load(blocks[2])
+        private$body = blocks[3:length(blocks)]
+      } else {
+        private$lead = ''
+        private$head = list(params = list(placeholder = 1))
+        private$body = blocks
+      }
     },
 
     getHead = function(){
@@ -37,7 +43,9 @@ rmdmanip = R6::R6Class(
       headernew = yaml::as.yaml(private$head)
 
       # Merge back with original text body
-      newfile = paste0(c(private$lead, headernew, private$body), collapse='---\n')
+      fileitems = c(private$lead, headernew, private$body)
+      fileitems = fileitems[!is.na(fileitems)]
+      newfile = paste0(fileitems, collapse='---\n')
 
     }
 
