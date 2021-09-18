@@ -1,5 +1,7 @@
 # rmdmanip
 
+![Tests](https://github.com/minimumcosttohumanity/rmdmanip/actions/workflows/r.yml/badge.svg)
+
 Provides a simple class interface to set and change headers of .Rmd files. 
 
 ## Goal
