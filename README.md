@@ -43,7 +43,7 @@ rmdfile = rmdfile %>% putParam('borogroves', 'mimsy')
 the final result can be extracted using `dump` to write to file, or `dumps` to write to a long string:
 
 ```
-rmdfile %>% dump('billig.Rmd')
+rmdfile %>% dump('brillig.Rmd')
 rmdstring = rmdfile %>% dumps()
 ```
 
