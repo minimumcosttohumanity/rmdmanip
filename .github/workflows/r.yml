@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main, master]
 
-name: test-coverage
+name: build
 
 jobs:
   test-coverage:
@@ -23,8 +23,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: covr
+          extra-packages: devtools
 
       - name: Test coverage
-        run: covr::codecov()
+        run: devtools::check()
         shell: Rscript {0}
