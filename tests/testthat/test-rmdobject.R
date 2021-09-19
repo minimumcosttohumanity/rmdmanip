@@ -74,3 +74,21 @@ test_that("File builds", {
 
 })
 
+test_that("Setting yaml items as list works", {
+  basetext = '---\ntitle: "Test RMD"\noutput: html_document\n---\n# Rmarkdown body\n'
+
+  paramlist = list('brilligness'  = 'slither tove'
+                   , 'gyre' = 1
+                   , 'wabe' = c(1,2)
+                   , 'momerats' = c('out', 'grabe')
+                   , 'beware' = list('jabberwock'= list('jaws' = 'bite', 'claws' = 'catch') )
+                   , 'heed' = list('bandersnatch'= 'frumious' )
+                   )
+
+  rmd = read.rmds(basetext) %>%
+    put_param_list(paramlist) %>%
+    dumps()
+
+  expect_snapshot(rmd)
+})
+

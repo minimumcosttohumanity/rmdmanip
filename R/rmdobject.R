@@ -100,6 +100,20 @@ put_param = function(rmdob, param_name, param_value){
   return(rmdob)
 }
 
+#' Set value in params block of R markdown preamble
+#' @param rmdob rmdmanip object
+#'
+#' @param param_name key of the parameter
+#' @param param_value value of the parameter
+#'
+#' @export
+put_param_list = function(rmdob, param_list){
+  for (key in names(param_list)){
+    rmdob$putParam(key, param_list[[key]])
+  }
+  return(rmdob)
+}
+
 #' Write updated R markdown file to disk
 #' @param rmdob rmdmanip object
 #'

@@ -1,6 +1,6 @@
 Package: rmdmanip
 Title: Provides manipulation options for R Markdown yaml headers
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Alex",
            family = "de Beer",
