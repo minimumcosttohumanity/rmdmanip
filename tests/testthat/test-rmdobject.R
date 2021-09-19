@@ -31,7 +31,7 @@ test_that("Saving works", {
   fn = paste0(fol, '/test_temp_1.txt')
 
   basetext = '---\ntitle: Test RMD\noutput: html_document\n---\n# Rmarkdown body\n'
-  read.rmds(basetext) %>% dump(fn)
+  read.rmds(basetext) %>% dumpf(fn)
   rmd = read.rmd(fn) %>% dumps()
 
   expect_equal(rmd, basetext)
@@ -66,7 +66,7 @@ test_that("File builds", {
     put_param('beware', list('jabberwock'= list('jaws' = 'bite', 'claws' = 'catch') )) %>%
     put_param('heed', list('bandersnatch'= 'frumious' )) %>%
     put('title', 'Amended RMD') %>%
-    dump(fn)
+    dumpf(fn)
 
   rmarkdown::render(fn, output_file = fn2)
 

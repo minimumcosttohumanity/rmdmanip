@@ -106,7 +106,7 @@ put_param = function(rmdob, param_name, param_value){
 #' @param file Output file name
 #'
 #' @export
-dump = function(rmdob, file){
+dumpf = function(rmdob, file){
   rmd = rmdob$build()
   lines = stringr::str_split(rmd, '\n')
 
